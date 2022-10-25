@@ -1,0 +1,59 @@
+<div class="title">
+    <h1>Pet List</h1>
+</div>
+
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="container">
+    <mat-form-field appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input autocomplete="off">
+    </mat-form-field>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z4" matSort>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="edad">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Age </th>
+            <td mat-cell *matCellDef="let element"> {{element.edad}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="raza">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Race </th>
+            <td mat-cell *matCellDef="let element"> {{element.raza}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="color">
+            <th mat-header-cell *matHeaderCellDef> Color </th>
+            <td mat-cell *matCellDef="let element"> {{element.color}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="peso">
+            <th mat-header-cell *matHeaderCellDef> Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.peso}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> 
+                <button routerLink="/agregarMascota" class="button_agregar" mat-raised-button color="primary">Add</button>
+            </th>
+            <td mat-cell *matCellDef="let element"> 
+                <mat-icon routerLink="/verMascota/{{element.id}}" class="search" fontIcon="search" matTooltip="See"></mat-icon>
+                <mat-icon routerLink="/editarMascota/{{element.id}}" class="edit" fontIcon="edit"  matTooltip="Edit"></mat-icon>
+                <mat-icon (click)="eliminarMascota(element.id)" class="delete" fontIcon="delete"  matTooltip="Remove"></mat-icon>
+            </td>   
+        </ng-container>
+
+        
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons 
+        aria-label="Items por página">
+</mat-paginator>
+</div>
